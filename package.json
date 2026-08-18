@@ -1,0 +1,17 @@
+{
+  "name": "farm-party",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Farm Party — annual farm/music-festival event site on Tallpond",
+  "scripts": {
+    "login": "npx @tallpond/cli login",
+    "create": "npx @tallpond/cli apps create \"Farm Party\"",
+    "dev": "npx @tallpond/cli dev",
+    "deploy": "npx @tallpond/cli deploy",
+    "typegen": "npx @tallpond/cli typegen"
+  },
+  "devDependencies": {
+    "@tallpond/cli": "latest",
+    "@tallpond/schema": "latest"
+  }
+}

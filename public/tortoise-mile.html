@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farm Party — Tortoise Mile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--pine:#100C29;--pine-dark:#08061A;--canvas:#F5F3EC;--ember:#FFE600;--rust:#FF3EC0;--brass:#1FE3FF;--ink:#171227;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--canvas);color:var(--ink);font-family:'Work Sans',sans-serif;line-height:1.5;}
+a{color:inherit;text-decoration:none;}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 48px;background:var(--canvas);border-bottom:1px solid rgba(33,30,26,0.12);position:sticky;top:0;z-index:10;}
+.brand{font-family:'Fraunces',serif;font-weight:600;font-size:1.2rem;}
+.navlinks{display:flex;gap:32px;font-size:0.9rem;font-weight:500;}
+.navlinks a{opacity:0.7;} .navlinks a.active{opacity:1;}
+.nav-cta{background:var(--rust);color:var(--canvas);padding:10px 20px;border-radius:2px;font-size:0.85rem;font-weight:600;}
+.page-hero{background:linear-gradient(180deg,var(--pine-dark),var(--pine));color:var(--canvas);padding:72px 48px 64px;text-align:center;}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:0.78rem;letter-spacing:0.15em;color:var(--ember);text-transform:uppercase;margin-bottom:14px;}
+.page-hero h1{font-family:'Fraunces',serif;font-weight:700;font-size:clamp(2.4rem,6vw,4.2rem);line-height:0.98;}
+.page-hero h1 em{font-style:italic;font-weight:300;color:var(--ember);}
+.page-hero p{max-width:520px;margin:18px auto 0;color:rgba(237,230,214,0.85);}
+
+/* Race profile — signature element: hand-drawn course map */
+.course-art{width:100%;max-width:760px;display:block;margin:36px auto 0;}
+.elev-label{font-family:'Space Mono',monospace;font-size:0.7rem;color:rgba(245,243,236,0.7);display:flex;justify-content:space-between;max-width:760px;margin:10px auto 0;text-transform:uppercase;letter-spacing:0.05em;}
+
+.section{padding:64px 48px;max-width:1080px;margin:0 auto;}
+.section-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--rust);margin-bottom:10px;}
+.section h2{font-family:'Fraunces',serif;font-weight:600;font-size:2rem;}
+
+.fact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(33,30,26,0.12);margin-top:32px;}
+.fact{background:var(--canvas);padding:28px 20px;text-align:center;}
+.fact .big{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:600;color:var(--rust);}
+.fact .lbl{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;opacity:0.7;margin-top:6px;}
+
+.prize-strip{background:var(--pine);color:var(--canvas);padding:56px 48px;}
+.prize-strip .section-eyebrow{color:var(--ember);}
+.prize-strip h2{color:var(--canvas);margin-bottom:28px;}
+.prize-cards{display:flex;gap:20px;flex-wrap:wrap;}
+.prize-card{background:rgba(237,230,214,0.06);border:1px solid rgba(237,230,214,0.15);border-radius:4px;padding:24px;flex:1;min-width:220px;}
+.prize-card .tag{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:var(--ember);text-transform:uppercase;letter-spacing:0.08em;}
+.prize-card h4{font-family:'Fraunces',serif;font-size:1.3rem;margin:10px 0 6px;}
+.prize-card p{font-size:0.9rem;color:rgba(237,230,214,0.75);}
+
+.form-card{background:#fff;border:1px solid rgba(33,30,26,0.1);border-radius:4px;padding:32px;max-width:560px;margin-top:28px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+input,select{font-family:'Work Sans',sans-serif;padding:12px 14px;border:1px solid rgba(33,30,26,0.25);border-radius:2px;font-size:0.92rem;width:100%;background:#fff;}
+label{font-size:0.82rem;font-weight:600;display:block;margin-bottom:6px;}
+.field{margin-bottom:16px;}
+.btn-primary{background:var(--ember);color:var(--pine-dark);padding:14px 28px;font-weight:600;font-size:0.92rem;border-radius:2px;border:none;cursor:pointer;font-family:inherit;width:100%;}
+
+.winners{margin-top:28px;border:1px solid rgba(33,30,26,0.12);border-radius:4px;overflow:hidden;}
+.winner-row{display:flex;justify-content:space-between;padding:14px 20px;font-family:'IBM Plex Mono',monospace;font-size:0.85rem;border-bottom:1px solid rgba(33,30,26,0.08);}
+.winner-row:last-child{border-bottom:none;}
+.winner-row .yr{color:var(--rust);font-weight:600;}
+
+footer{background:var(--pine-dark);color:rgba(237,230,214,0.6);padding:40px 48px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:0.78rem;}
+@media (max-width:800px){.navlinks{display:none;}.section,.page-hero,.prize-strip{padding-left:22px;padding-right:22px;}.fact-grid,.row2{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">FARM PARTY</div>
+  <div class="navlinks">
+    <a href="#">Archive</a><a href="#">The Music</a><a href="#" class="active">Tortoise Mile</a><a href="#">Volunteer</a><a href="#">Shop</a>
+  </div>
+  <a href="#" class="nav-cta">Get a Ticket</a>
+</nav>
+
+<section class="page-hero">
+  <div class="eyebrow">Inaugural Race · 2026</div>
+  <h1>THE <em>TORTOISE</em><br>MILE.</h1>
+  <p>Slowest name. Fastest mile. Down the hill, straight through the field, right to the taproom door.</p>
+  <svg class="course-art" viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tortoise Mile course map">
+    <defs>
+      <linearGradient id="trailGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#1FE3FF"/>
+        <stop offset="50%" stop-color="#FF2FD0"/>
+        <stop offset="100%" stop-color="#FFE600"/>
+      </linearGradient>
+      <radialGradient id="glowA" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#1FE3FF" stop-opacity="0.25"/>
+        <stop offset="100%" stop-color="#1FE3FF" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="glowB" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#FF2FD0" stop-opacity="0.22"/>
+        <stop offset="100%" stop-color="#FF2FD0" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+
+    <circle cx="150" cy="130" r="160" fill="url(#glowA)"/>
+    <circle cx="700" cy="380" r="200" fill="url(#glowB)"/>
+
+    <!-- hillside contours -->
+    <path d="M0,60 C200,20 400,90 900,40" fill="none" stroke="#F5F3EC" stroke-opacity="0.06" stroke-width="2"/>
+    <path d="M0,150 C250,100 450,190 900,140" fill="none" stroke="#F5F3EC" stroke-opacity="0.05" stroke-width="2"/>
+    <path d="M0,400 C300,430 600,410 900,440" fill="none" stroke="#F5F3EC" stroke-opacity="0.06" stroke-width="2"/>
+
+    <!-- trail underlayer -->
+    <path d="M100,115 C170,100 240,124 305,108 C375,92 440,114 505,100 C525,96 545,98 555,102
+             C570,150 540,210 560,258 C572,298 548,318 558,335
+             C610,350 690,362 755,392"
+      fill="none" stroke="#F5F3EC" stroke-opacity="0.15" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- trail gradient path -->
+    <path d="M100,115 C170,100 240,124 305,108 C375,92 440,114 505,100 C525,96 545,98 555,102
+             C570,150 540,210 560,258 C572,298 548,318 558,335
+             C610,350 690,362 755,392"
+      fill="none" stroke="url(#trailGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 15"/>
+
+    <!-- mile markers -->
+    <circle cx="330" cy="103" r="6" fill="#F5F3EC"/>
+    <text x="330" y="85" text-anchor="middle" font-family="Space Mono, monospace" font-size="13" fill="#F5F3EC" fill-opacity="0.7">0.25 mi</text>
+    <circle cx="525" cy="99" r="6" fill="#F5F3EC"/>
+    <text x="525" y="81" text-anchor="middle" font-family="Space Mono, monospace" font-size="13" fill="#F5F3EC" fill-opacity="0.7">0.50 mi</text>
+    <circle cx="558" cy="290" r="6" fill="#F5F3EC"/>
+    <text x="595" y="290" text-anchor="start" font-family="Space Mono, monospace" font-size="13" fill="#F5F3EC" fill-opacity="0.7">0.75 mi</text>
+
+    <!-- START: palm tree + turtle, at the farm -->
+    <g transform="translate(50,60)">
+      <path d="M0,60 Q4,30 0,0" stroke="#8B5CF6" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <path d="M0,4 C-26,-10 -34,4 -40,-8 C-24,4 -18,16 0,4" fill="#1FE3FF"/>
+      <path d="M0,4 C26,-10 34,4 40,-8 C24,4 18,16 0,4" fill="#FF2FD0"/>
+      <path d="M0,2 C-20,-16 -14,-30 -4,-24 C-10,-14 -8,-2 0,2" fill="#FFE600"/>
+      <path d="M0,2 C20,-16 14,-30 4,-24 C10,-14 8,-2 0,2" fill="#1FE3FF"/>
+      <path d="M0,0 C-2,-18 6,-28 2,-40" stroke="#FF2FD0" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <ellipse cx="4" cy="70" rx="22" ry="14" fill="#FFE600"/>
+      <path d="M-14,64 Q4,50 22,64 Q4,58 -14,64Z" fill="#FF2FD0"/>
+      <circle cx="-16" cy="70" r="6" fill="#FFE600"/>
+      <circle cx="-19" cy="69" r="1.6" fill="#171227"/>
+    </g>
+    <text x="45" y="155" font-family="Bricolage Grotesque, sans-serif" font-weight="700" font-size="15" fill="#F5F3EC">FARM</text>
+
+    <!-- FINISH: beer glass -->
+    <g transform="translate(755,350)">
+      <path d="M-16,-30 L16,-30 L11,30 L-11,30 Z" fill="#FFE600" fill-opacity="0.9" stroke="#F5F3EC" stroke-width="2"/>
+      <ellipse cx="0" cy="-30" rx="16" ry="6" fill="#F5F3EC"/>
+      <circle cx="-6" cy="-32" r="3" fill="#F5F3EC"/>
+      <circle cx="4" cy="-34" r="2.4" fill="#F5F3EC"/>
+      <circle cx="0" cy="10" r="2" fill="#FFF7C2"/>
+      <circle cx="4" cy="-2" r="1.6" fill="#FFF7C2"/>
+    </g>
+    <text x="730" y="410" font-family="Bricolage Grotesque, sans-serif" font-weight="700" font-size="15" fill="#F5F3EC">FINISH</text>
+
+    <!-- headline stats -->
+    <text x="450" y="440" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="26" fill="#F5F3EC">1.00 MI  ·  ~70 FT DOWN</text>
+  </svg>
+  <div class="elev-label"><span>START — THE FARM</span><span>FINISH — BERRYESSA BREWING</span></div>
+</section>
+
+<section class="section">
+  <div class="section-eyebrow">The course</div>
+  <h2>Downhill the whole way. That's the whole pitch.</h2>
+  <div class="fact-grid">
+    <div class="fact"><div class="big">1.00</div><div class="lbl">Mile, start to finish</div></div>
+    <div class="fact"><div class="big">~70 ft</div><div class="lbl">Elevation drop</div></div>
+    <div class="fact"><div class="big">Mostly</div><div class="lbl">Downhill grade</div></div>
+    <div class="fact"><div class="big">1</div><div class="lbl">Brewery at the end</div></div>
+  </div>
+</section>
+
+<section class="prize-strip">
+  <div class="section-eyebrow">Why you should run</div>
+  <h2>Win your category, win next year.</h2>
+  <div class="prize-cards">
+    <div class="prize-card"><div class="tag">Fastest Woman</div><h4>Free beer + return trip</h4><p>A beer at the finish line, plus free Event + Dinner admission for you and a plus-one at Farm Party next year.</p></div>
+    <div class="prize-card"><div class="tag">Fastest Man</div><h4>Free beer + return trip</h4><p>Same deal — a beer at the finish line, plus free Event + Dinner admission for you and a plus-one next year.</p></div>
+    <div class="prize-card"><div class="tag">Everyone Else</div><h4>Bragging rights</h4><p>You ran a mile downhill to a brewery. That's the reward. Also possibly a beer, depending on the keg.</p></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-eyebrow">Sign up</div>
+  <h2 style="margin-bottom:8px;">Race entry</h2>
+  <p style="opacity:0.75;margin-bottom:8px;">Free with your Event Ticket. One run per person, results logged by our timing crew at the finish.</p>
+  <div class="form-card">
+    <div class="row2">
+      <div class="field"><label>Name</label><input id="race-name" placeholder="Your name"></div>
+      <div class="field"><label>Category</label><select id="race-category"><option value="male">Male</option><option value="female">Female</option></select></div>
+    </div>
+    <div class="field"><label>Est. mile time (optional, for heats)</label><input id="race-est-time" placeholder="e.g. 7:30"></div>
+    <button class="btn-primary" id="btn-race-signup">Sign Up for the Race</button>
+    <p id="race-signup-status" style="font-family:'Space Mono',monospace;font-size:0.72rem;opacity:0.7;margin-top:10px;text-align:center;"></p>
+  </div>
+
+  <div class="section-eyebrow" style="margin-top:48px;">Past winners</div>
+  <h2 style="margin-bottom:8px;">Hall of Fame</h2>
+  <div class="winners">
+    <div class="winner-row"><span><span class="yr">2026</span> — Inaugural race, results TBD</span><span>—</span></div>
+  </div>
+</section>
+
+<footer>PACE YOURSELF · IT'S A HILL, NOT A HOSPITAL VISIT</footer>
+
+<script type="module">
+  import { paintAuthState, submitBeerMileEntry } from '/js/tallpond-app.js';
+  paintAuthState();
+
+  document.getElementById('btn-race-signup').addEventListener('click', async () => {
+    const status = document.getElementById('race-signup-status');
+    status.textContent = 'Submitting…';
+    try {
+      await submitBeerMileEntry({
+        category: document.getElementById('race-category').value,
+        estTime: document.getElementById('race-est-time').value,
+      });
+      status.textContent = 'You\'re in! See you at the start line.';
+    } catch (err) {
+      status.textContent = 'Something went wrong: ' + err.message;
+    }
+  });
+</script>
+</body>
+</html>
