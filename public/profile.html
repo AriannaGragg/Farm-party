@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farm Party — Your Profile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Work+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--night:#100C29;--night-deep:#08061A;--lime:#FFE600;--cyan:#1FE3FF;--coral:#FF3EC0;--violet:#FF2FD0;--paper:#F5F3EC;--ink:#171227;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--paper);color:var(--ink);font-family:'Work Sans',sans-serif;line-height:1.5;}
+a{color:inherit;text-decoration:none;}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 48px;background:var(--night-deep);border-bottom:1px solid rgba(255,255,255,0.08);}
+.brand{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1.2rem;color:var(--paper);}
+.brand span{color:var(--lime);}
+.navlinks{display:flex;gap:32px;font-size:0.9rem;font-weight:500;color:rgba(245,243,236,0.7);}
+.navlinks a.active{color:var(--lime);}
+.laser{height:6px;background:linear-gradient(90deg,var(--lime),var(--cyan),var(--violet),var(--coral),var(--lime));}
+.wrap{max-width:600px;margin:0 auto;padding:56px 24px 90px;}
+.eyebrow{font-family:'Space Mono',monospace;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--coral);margin-bottom:10px;}
+h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:2.1rem;margin-bottom:8px;}
+.wrap>p{opacity:0.7;margin-bottom:32px;}
+.card{background:#fff;border:1px solid rgba(23,18,39,0.1);border-radius:14px;padding:30px;box-shadow:0 10px 30px rgba(16,12,41,0.06);margin-bottom:20px;}
+.field{margin-bottom:18px;}
+label{font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px;}
+input,textarea{font-family:'Work Sans',sans-serif;padding:13px 14px;border:1px solid rgba(23,18,39,0.2);border-radius:8px;font-size:0.92rem;width:100%;background:#fdfcf9;}
+.avatar-upload{width:96px;height:96px;border-radius:50%;border:2px dashed rgba(23,18,39,0.25);display:flex;align-items:center;justify-content:center;font-family:'Bricolage Grotesque',sans-serif;font-size:1.6rem;color:rgba(23,18,39,0.4);margin-bottom:20px;background:repeating-linear-gradient(135deg,rgba(63,230,201,0.06),rgba(63,230,201,0.06) 8px,rgba(139,92,246,0.06) 8px,rgba(139,92,246,0.06) 16px);}
+.years-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+.year-chip{border:2px solid rgba(23,18,39,0.15);border-radius:8px;padding:10px 0;text-align:center;font-family:'Space Mono',monospace;font-size:0.85rem;cursor:pointer;user-select:none;}
+.year-chip.on{background:var(--violet);border-color:var(--violet);color:#fff;font-weight:700;}
+.year-chip.one{position:relative;}
+.year-chip.one::after{content:"YEAR ONE";position:absolute;bottom:-16px;left:0;right:0;font-size:0.55rem;letter-spacing:0.05em;color:var(--coral);font-weight:700;}
+.hint{font-family:'Space Mono',monospace;font-size:0.72rem;opacity:0.55;margin-top:24px;}
+.btn-primary{background:var(--lime);color:var(--night-deep);padding:15px 28px;font-weight:700;font-size:0.92rem;border-radius:30px;border:none;cursor:pointer;font-family:'Bricolage Grotesque',sans-serif;width:100%;margin-top:10px;}
+footer{background:var(--night-deep);color:rgba(245,243,236,0.6);padding:36px 48px;text-align:center;font-family:'Space Mono',monospace;font-size:0.78rem;}
+@media (max-width:480px){.years-grid{grid-template-columns:repeat(3,1fr);}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">FARM PARTY <span>◆</span></div>
+  <div class="navlinks"><a href="#">Archive</a><a href="#">The Music</a><a href="#">Beer Mile</a><a href="#">Join</a><a href="#" class="active">Profile</a></div>
+</nav>
+<div class="laser"></div>
+
+<div class="wrap">
+  <div class="eyebrow">Your Profile</div>
+  <h1>Tell us who you are.</h1>
+  <p>Just the basics — this builds your spot in the Farm Party history log.</p>
+
+  <div class="card">
+    <div class="avatar-upload">+</div>
+    <div class="field"><label>Name</label><input placeholder="Your name"></div>
+    <div class="field"><label>Short Bio (optional)</label><textarea rows="2" placeholder="One line about you."></textarea></div>
+  </div>
+
+  <div class="card">
+    <label style="margin-bottom:14px;">Which years have you been to Farm Party?</label>
+    <div class="years-grid">
+      <div class="year-chip one" data-year="2011">2011</div>
+      <div class="year-chip" data-year="2012">2012</div>
+      <div class="year-chip" data-year="2013">2013</div>
+      <div class="year-chip" data-year="2014">2014</div>
+      <div class="year-chip" data-year="2015">2015</div>
+      <div class="year-chip" data-year="2016">2016</div>
+      <div class="year-chip" data-year="2017">2017</div>
+      <div class="year-chip" data-year="2018">2018</div>
+      <div class="year-chip" data-year="2019">2019</div>
+      <div class="year-chip" data-year="2020">2020</div>
+      <div class="year-chip" data-year="2021">2021</div>
+      <div class="year-chip" data-year="2022">2022</div>
+      <div class="year-chip" data-year="2023">2023</div>
+      <div class="year-chip" data-year="2024">2024</div>
+      <div class="year-chip" data-year="2025">2025</div>
+    </div>
+    <div class="hint">TAP TO TOGGLE · SELF-REPORTED FOR NOW, WE'LL AUTO-FILL THIS FROM TICKET RECORDS GOING FORWARD</div>
+  </div>
+
+  <button class="btn-primary">Save Profile</button>
+</div>
+
+<footer>FARM PARTY — SAME FACES, EVERY OCTOBER, SINCE 2011</footer>
+
+<script type="module">
+  import { paintAuthState, getMyYearsAttended, toggleYearAttended } from '/js/tallpond-app.js';
+  paintAuthState();
+
+  async function loadYears() {
+    const mine = await getMyYearsAttended().catch(() => []);
+    document.querySelectorAll('.year-chip').forEach(chip => {
+      const y = parseInt(chip.dataset.year, 10);
+      chip.classList.toggle('on', mine.includes(y));
+    });
+  }
+  loadYears();
+
+  document.querySelectorAll('.year-chip').forEach(chip => {
+    chip.addEventListener('click', async () => {
+      const year = parseInt(chip.dataset.year, 10);
+      const willBeOn = !chip.classList.contains('on');
+      chip.classList.toggle('on', willBeOn);
+      try {
+        await toggleYearAttended(year, willBeOn);
+      } catch (err) {
+        chip.classList.toggle('on', !willBeOn); // revert on failure
+      }
+    });
+  });
+</script>
+</body>
+</html>
