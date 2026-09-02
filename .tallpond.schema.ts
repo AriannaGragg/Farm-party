@@ -80,14 +80,72 @@ export default defineSchema({
       table.timestamps();
       table.index(["year"]);
     },
+
+    // Crowdsourced photo/video album — link-paste based (Google Photos,
+    // Drive, any share link) rather than native file upload, since blob
+    // storage support in Tallpond is unconfirmed and link-paste is easy
+    // on mobile regardless. Covers both "photo album" and "vlog" asks —
+    // mediaType distinguishes the two, same table either way.
+    media: (table) => {
+      table.text("url").notNull();
+      table.text("mediaType").notNull(); // "photo" | "video"
+      table.text("caption");
+      table.timestamps();
+    },
+
+    // ---- Multi-event structure (v1: bare minimum) ----
+
+    // One row per crew event: Farm Party, Harvest Party, Mimosa Party, etc.
+    // Farm Party is the flagship (isFlagship=true).
+    events: (table) => {
+      table.text("name").notNull();
+      table.text("slug").notNull();       // url-friendly id, e.g. "farm-party"
+      table.text("eventDate");
+      table.text("location");
+      table.text("coverImage");
+      table.boolean("isFlagship");
+      table.timestamps();
+      table.index(["slug"]);
+    },
+
+    // The roster: names YOU add after confirming payment on Partiful/Venmo.
+    // Guests search-and-claim their own row to link it to their account.
+    // NOTE (v1 trade-off): claiming needs any signed-in member to update a
+    // row they didn't create, which doesn't fit the normal creator/admin
+    // update rule cleanly. Access below sets update="member" for this
+    // table as a pragmatic v1 choice — fine for a small trusted crew, but
+    // means anyone could technically claim/unclaim any row. Tighten later
+    // with a serverless function that checks identity before allowing the
+    // claim, rather than a wide-open client-side update.
+    roster: (table) => {
+      table.text("eventId").notNull();
+      table.text("name").notNull();
+      table.text("claimedByUserId");      // null until claimed
+      table.text("plusOneOf");            // null unless this is someone's named plus-one
+      table.timestamps();
+      table.index(["eventId"]);
+      table.index(["claimedByUserId"]);
+    },
+
+    // Guest-submitted schedule additions — lightweight, no review needed,
+    // e.g. "sunrise yoga, 8am, by the barn." Anyone can add, anyone reads.
+    scheduleItems: (table) => {
+      table.text("eventId").notNull();
+      table.text("time");
+      table.text("title").notNull();
+      table.text("addedByName");
+      table.timestamps();
+      table.index(["eventId"]);
+    },
   },
 
   resources: {
-    // "This year's Farm Party" — every signup gets shared in here so
-    // organizers can review everything from one dashboard.
-    event: (event) => {
-      event.visibility("discoverable");
-      event.defaultRole("member");
+    // "The Crew" — the whole hub, not one event. Every event's signups,
+    // roster, and media get shared in here so organizers see everything
+    // in one place, and any member can browse events + claim their spot.
+    crew: (crew) => {
+      crew.visibility("discoverable");
+      crew.defaultRole("member");
 
       const organizerReview = (table: any) => {
         table.onMemberRemove("remove");
@@ -101,12 +159,68 @@ export default defineSchema({
         });
       };
 
-      event.shares("ticketRequests", organizerReview);
-      event.shares("volunteerSignups", organizerReview);
-      event.shares("activityOffers", organizerReview);
-      event.shares("bandProfiles", organizerReview);
-      event.shares("bandJoinRequests", organizerReview);
-      event.shares("beerMileEntries", organizerReview);
+      crew.shares("ticketRequests", organizerReview);
+      crew.shares("volunteerSignups", organizerReview);
+      crew.shares("activityOffers", organizerReview);
+      crew.shares("bandProfiles", organizerReview);
+      crew.shares("bandJoinRequests", organizerReview);
+      crew.shares("beerMileEntries", organizerReview);
+
+      // Photo album: everyone can read + add, only the poster (or admin)
+      // can remove.
+      crew.shares("media", (table: any) => {
+        table.onMemberRemove("remove");
+        table.onOwnerDelete("tombstone");
+        table.access({
+          read: "member",
+          create: "member",
+          update: "creator",
+          delete: "creator",
+          unlink: "admin",
+        });
+      });
+
+      // Events: only admin creates/edits events, everyone can browse them.
+      crew.shares("events", (table: any) => {
+        table.onMemberRemove("remove");
+        table.onOwnerDelete("tombstone");
+        table.access({
+          read: "member",
+          create: "admin",
+          update: "admin",
+          delete: "admin",
+          unlink: "admin",
+        });
+      });
+
+      // Roster: only admin adds names (after confirming Venmo). Everyone
+      // can read (needed to search-and-claim). update="member" is the v1
+      // trade-off noted above — any member can claim any unclaimed row.
+      crew.shares("roster", (table: any) => {
+        table.onMemberRemove("remove");
+        table.onOwnerDelete("tombstone");
+        table.access({
+          read: "member",
+          create: "admin",
+          update: "member",
+          delete: "admin",
+          unlink: "admin",
+        });
+      });
+
+      // Schedule additions: fully open, low-friction by design — this is
+      // for spontaneous day-of stuff, not something worth gatekeeping.
+      crew.shares("scheduleItems", (table: any) => {
+        table.onMemberRemove("remove");
+        table.onOwnerDelete("tombstone");
+        table.access({
+          read: "member",
+          create: "member",
+          update: "creator",
+          delete: "creator",
+          unlink: "admin",
+        });
+      });
     },
   },
 });

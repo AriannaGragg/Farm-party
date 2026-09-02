@@ -5,10 +5,11 @@
   offers, band profiles, band join requests, beer mile entries, years
   attended. First pass — see the schema file's top comment for what to
   double-check against Tallpond's full docs before real-world use.
-- `public/` — the actual site (renamed for real routing: `index.html` is
-  home, `tortoise-mile.html` is the race page). Each page that has a live
-  form is wired to `public/js/tallpond-app.js`, which handles sign-in and
-  every data write.
+- `public/` — the actual site. Two pages: `index.html` (Home — the
+  calendar-style event grid) and `event.html` (the reusable Event Page
+  template, e.g. `event.html?e=farm-party`). Everything else was
+  consolidated into `event.html` as sections. `public/js/tallpond-app.js`
+  handles sign-in and all data calls.
 - **Sign-in**: there's no more custom username/phone page. `tallpond.auth.signIn()`
   redirects to Tallpond's own hosted login (built on Ory) — whatever methods
   Tallpond has configured there (passwordless code, etc.) is what guests see.
